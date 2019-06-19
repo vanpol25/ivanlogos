@@ -22,4 +22,5 @@ public class ProductResponse {
         price = product.getPrice();
         subCategoryId = product.getSubCategory().getId();
     }
+
 }
