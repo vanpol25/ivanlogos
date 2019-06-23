@@ -1,10 +1,15 @@
 package ivan.polhniuk.ivanlogos.service;
 
 import ivan.polhniuk.ivanlogos.dto.request.UserRequest;
+import ivan.polhniuk.ivanlogos.dto.response.ProductResponse;
+import ivan.polhniuk.ivanlogos.dto.response.UserResponse;
 import ivan.polhniuk.ivanlogos.entity.User;
 import ivan.polhniuk.ivanlogos.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -21,12 +26,10 @@ public class UserService {
         userRepository.save(user);
     }
 
-    private String name;
-
-    private String email;
-
-    private String password;
-
-    private String phone_number;
+    public List<UserResponse> findAll() {
+        return userRepository.findAll().stream()
+                .map(UserResponse::new)
+                .collect(Collectors.toList());
+    }
 
 }
