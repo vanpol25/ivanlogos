@@ -1,6 +1,5 @@
 package ivan.polhniuk.ivanlogos.service;
 
-import ivan.polhniuk.ivanlogos.dto.request.CategoryRequest;
 import ivan.polhniuk.ivanlogos.dto.request.SubCategoryRequest;
 import ivan.polhniuk.ivanlogos.dto.response.SubCategoryResponse;
 import ivan.polhniuk.ivanlogos.entity.SubCategory;

@@ -33,5 +33,4 @@ public class CategoryService {
                 .orElseThrow(() -> new IllegalArgumentException("Category with id=" + id + " not exists"));
     }
 
-
 }

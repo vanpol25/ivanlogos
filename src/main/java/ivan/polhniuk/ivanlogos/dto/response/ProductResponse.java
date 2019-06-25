@@ -4,6 +4,8 @@ import ivan.polhniuk.ivanlogos.entity.Product;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.sql.Date;
+
 @Getter
 @Setter
 
@@ -14,6 +16,9 @@ public class ProductResponse {
     private String description;
     private Integer price;
     private Long subCategoryId;
+    private Date date_published;
+    private Long cityId;
+    private Long userId;
 
     public ProductResponse(Product product) {
         id = product.getId();

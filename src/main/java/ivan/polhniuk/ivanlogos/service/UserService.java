@@ -1,8 +1,8 @@
 package ivan.polhniuk.ivanlogos.service;
 
 import ivan.polhniuk.ivanlogos.dto.request.UserRequest;
-import ivan.polhniuk.ivanlogos.dto.response.ProductResponse;
 import ivan.polhniuk.ivanlogos.dto.response.UserResponse;
+import ivan.polhniuk.ivanlogos.entity.City;
 import ivan.polhniuk.ivanlogos.entity.User;
 import ivan.polhniuk.ivanlogos.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +30,11 @@ public class UserService {
         return userRepository.findAll().stream()
                 .map(UserResponse::new)
                 .collect(Collectors.toList());
+    }
+
+    public User findById(Long id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("User with id=" + id + " not exists"));
     }
 
 }

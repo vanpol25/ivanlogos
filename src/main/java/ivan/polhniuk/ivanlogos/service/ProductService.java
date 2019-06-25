@@ -21,6 +21,12 @@ public class ProductService {
     @Autowired
     private SubCategoryService subCategoryService;
 
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private CityService cityService;
+
     public void create(ProductRequest request) {
         productRepository.save(save(null, request));
     }
@@ -45,7 +51,10 @@ public class ProductService {
         product.setName(request.getName());
         product.setDescription(request.getDescription());
         product.setPrice(request.getPrice());
+        product.setDate_published(request.getDate_published());
         product.setSubCategory(subCategoryService.findById(request.getSubCategoryId()));
+        product.setCity(cityService.findById(request.getCityId()));
+        product.setUser(userService.findById(request.getUserId()));
         return product;
     }
 
