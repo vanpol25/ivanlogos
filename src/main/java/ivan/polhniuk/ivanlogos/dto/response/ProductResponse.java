@@ -15,17 +15,17 @@ public class ProductResponse {
     private String name;
     private String description;
     private Integer price;
-    private Long subCategoryId;
+    private SubCategoryResponse subCategory;
     private Date date_published;
-    private Long cityId;
-    private Long userId;
+    private CityResponse city;
+    private UserResponse user;
 
     public ProductResponse(Product product) {
         id = product.getId();
         name = product.getName();
         description = product.getDescription();
         price = product.getPrice();
-        subCategoryId = product.getSubCategory().getId();
+        subCategory = new SubCategoryResponse(product.getSubCategory());
     }
 
 }

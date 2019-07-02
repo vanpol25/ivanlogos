@@ -1,14 +1,15 @@
 package ivan.polhniuk.ivanlogos.service;
 
+import ivan.polhniuk.ivanlogos.dto.request.PaginationRequest;
 import ivan.polhniuk.ivanlogos.dto.request.ProductRequest;
-import ivan.polhniuk.ivanlogos.dto.response.CategoryResponse;
+import ivan.polhniuk.ivanlogos.dto.response.PageResponse;
 import ivan.polhniuk.ivanlogos.dto.response.ProductResponse;
-import ivan.polhniuk.ivanlogos.entity.Category;
 import ivan.polhniuk.ivanlogos.entity.Product;
 import ivan.polhniuk.ivanlogos.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,6 +38,14 @@ public class ProductService {
 
     public void delete(Long id) {
         productRepository.delete(findById(id));
+    }
+
+    public PageResponse<ProductResponse> findPage(PaginationRequest paginationRequest) {
+        Page<Product> all = productRepository.findAll(PageRequest.of(paginationRequest.toPageable());
+        List<ProductResponse> collect = all.getContent().stream().map(ProductResponse::new).collect(Collectors.toList());
+        return new PageResponse<>(all.getTotalPages(),
+                all.getTotalElements(),
+                collect);
     }
 
     public Product findById(Long id) {

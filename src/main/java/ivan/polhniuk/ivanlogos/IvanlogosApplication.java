@@ -17,25 +17,6 @@ public class IvanlogosApplication {
     @Autowired
     private ProductRepository productRepository;
 
-    @PostConstruct
-    public void init() {
-//        categoryRepository.findAll().forEach(c ->
-//                System.out.println(c.getId() + " " + c.getName()));
-//        categoryRepository.deleteById(2L);
-
-//        productRepository.findByPrice(10000, 30000).forEach(e->
-//                System.out.println(e.getId() + " " +
-//                        e.getName() + " " +
-//                        e.getPrice()));
-
-//        productRepository.findBySubCategory("Audi").forEach(e ->
-//                System.out.println(e.getId() + " " +
-//                        e.getName() + " " +
-//                        e.getPrice()));
-        categoryRepository.findAllByNameLike("%a%").forEach(e->
-                System.out.println(e.getName()));
-    }
-
     public static void main(String[] args) {
         SpringApplication.run(IvanlogosApplication.class, args);
     }
