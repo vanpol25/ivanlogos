@@ -41,11 +41,10 @@ public class ProductService {
     }
 
     public PageResponse<ProductResponse> findPage(PaginationRequest paginationRequest) {
-        Page<Product> all = productRepository.findAll(PageRequest.of(paginationRequest.toPageable());
-        List<ProductResponse> collect = all.getContent().stream().map(ProductResponse::new).collect(Collectors.toList());
-        return new PageResponse<>(all.getTotalPages(),
-                all.getTotalElements(),
-                collect);
+        Page<Product> page = productRepository.findAll(paginationRequest.toPageable());
+        return new PageResponse<>(page.getTotalPages(),
+                page.getTotalElements(),
+                page.get().map(ProductResponse::new).collect(Collectors.toList()));
     }
 
     public Product findById(Long id) {
