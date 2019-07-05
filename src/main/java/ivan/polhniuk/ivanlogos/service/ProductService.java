@@ -8,8 +8,10 @@ import ivan.polhniuk.ivanlogos.entity.Product;
 import ivan.polhniuk.ivanlogos.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -42,14 +44,23 @@ public class ProductService {
 
     public PageResponse<ProductResponse> findPage(PaginationRequest paginationRequest) {
         Page<Product> page = productRepository.findAll(paginationRequest.toPageable());
+        page.forEach(e -> updateReviews(e.getId()));
         return new PageResponse<>(page.getTotalPages(),
                 page.getTotalElements(),
-                page.get().map(ProductResponse::new).collect(Collectors.toList()));
+                page.get().
+                        map(ProductResponse::new).
+                        collect(Collectors.toList()));
     }
 
     public Product findById(Long id) {
         return productRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Product with id=" + id + " not exists"));
+    }
+
+    private void updateReviews(Long id) {
+        Product byId = findById(id);
+        byId.setReviews(byId.getReviews() + 1);
+        productRepository.save(byId);
     }
 
     private Product save(Product product, ProductRequest request) {
@@ -59,7 +70,7 @@ public class ProductService {
         product.setName(request.getName());
         product.setDescription(request.getDescription());
         product.setPrice(request.getPrice());
-        product.setDate_published(request.getDate_published());
+        product.setDate_published(Date.valueOf(LocalDate.now()));
         product.setSubCategory(subCategoryService.findById(request.getSubCategoryId()));
         product.setCity(cityService.findById(request.getCityId()));
         product.setUser(userService.findById(request.getUserId()));

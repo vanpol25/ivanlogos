@@ -29,6 +29,10 @@ public class Product {
 
     private Date date_published;
 
+    //!!!Ask about!!!
+    @Column()
+    private Long reviews = 0L;
+
     @ManyToOne
     private SubCategory subCategory;
 

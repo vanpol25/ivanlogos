@@ -5,9 +5,7 @@ import ivan.polhniuk.ivanlogos.dto.request.ProductRequest;
 import ivan.polhniuk.ivanlogos.dto.response.PageResponse;
 import ivan.polhniuk.ivanlogos.dto.response.ProductResponse;
 import ivan.polhniuk.ivanlogos.service.ProductService;
-import javafx.scene.control.Pagination;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -33,6 +31,7 @@ public class ProductController {
     public void delete(Long id) {
         productService.delete(id);
     }
+
     @GetMapping
     public PageResponse<ProductResponse> findPage(@Valid PaginationRequest paginationRequest) {
         return productService.findPage(paginationRequest);

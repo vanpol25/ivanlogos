@@ -13,6 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 
 @Entity
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"name", "email"})})
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
