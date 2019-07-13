@@ -3,13 +3,11 @@ package ivan.polhniuk.ivanlogos.controller;
 import ivan.polhniuk.ivanlogos.dto.request.UserRequest;
 import ivan.polhniuk.ivanlogos.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/user")
 public class UserController {

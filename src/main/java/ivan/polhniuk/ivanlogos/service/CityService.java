@@ -20,7 +20,18 @@ public class CityService {
     private RegionService regionService;
 
     public void create(CityRequest request) {
-        City city = new City();
+        save(new City(), request);
+    }
+
+    public void update(Long id, CityRequest request) {
+        save(findById(id), request);
+    }
+
+    public void delete(Long id) {
+        cityRepository.delete(findById(id));
+    }
+
+    private void save(City city, CityRequest request) {
         city.setName(request.getName());
         city.setRegion(regionService.findById(request.getRegionId()));
         cityRepository.save(city);
@@ -33,6 +44,5 @@ public class CityService {
     public List<CityResponse> findAll() {
         return cityRepository.findAll().stream().map(CityResponse::new).collect(Collectors.toList());
     }
-
 
 }

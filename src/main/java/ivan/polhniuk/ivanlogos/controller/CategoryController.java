@@ -23,7 +23,7 @@ public class CategoryController {
     }
 
     @PutMapping
-    public void update(Long id, CategoryRequest request) {
+    public void update(Long id, @Valid @RequestBody CategoryRequest request) {
         categoryService.update(id, request);
     }
 

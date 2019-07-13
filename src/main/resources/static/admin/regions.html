@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Region admin</title>
+    <link rel="stylesheet" href="../style/shop.css">
+    <link rel="stylesheet" href="../style/materialize.min.css">
+    <script src="../scripts/jquery-3.4.1.min.js"></script>
+    <script src="../scripts/materialize.min.js"></script>
+    <script src="../scripts/regions.js"></script>
+</head>
+<body>
+<div class="top-pane">
+    <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Add new region</a>
+    <div id="modal1" class="modal">
+        <div class="modal-content">
+            <input type="text" id="region-id" style="display:none">
+            <input id="createRegionInput" type="text">
+            <button id="createButton" class="btn waves-effect waves-light">Create</button>
+        </div>
+    </div>
+</div>
+
+<div class="content">
+    <div class="left-pane" style="width: 23%">
+
+    </div>
+    <div class="right-pane" style="width: 77%">
+
+        <table class="highlight">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody id="regions"></tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>

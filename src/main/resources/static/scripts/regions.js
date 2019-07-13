@@ -2,12 +2,11 @@ $(document).ready(function () {
     $('#modal1').modal();
 
     $.ajax({
-        url: 'http://localhost:8080/category',
+        url: 'http://localhost:8080/region',
         type: 'get',
         success: function (response) {
-            for (let category of response) {
-                appendCategoryToTable(category);
-                console.log("fwafawf")
+            for (let region of response) {
+                appendRegionToTable(region);
             }
             onDeleteBtn();
             onUpdateBtn();
@@ -16,15 +15,15 @@ $(document).ready(function () {
 
     $('#createButton').click(function () {
         let request = {
-            name: $('#createCategoryInput').val()
+            name: $('#createRegionInput').val()
         };
 
-        let id = $('#category-id').val();
+        let id = $('#region-id').val();
 
-        console.log(id + ' - ' + $('#createCategoryInput').val());
+        console.log(id + ' - ' + $('#createRegionInput').val());
         if (id === '') {
             $.ajax({
-                url: 'http://localhost:8080/category',
+                url: 'http://localhost:8080/region',
                 contentType: 'application/json',
                 type: 'post',
                 data: JSON.stringify(request),
@@ -35,7 +34,7 @@ $(document).ready(function () {
             location.reload();
         } else {
             $.ajax({
-                url: 'http://localhost:8080/category?id=' + id,
+                url: 'http://localhost:8080/region?id=' + id,
                 contentType: 'application/json',
                 type: 'put',
                 data: JSON.stringify(request),
@@ -44,23 +43,23 @@ $(document).ready(function () {
 
                 }
             });
-            $('#category-id').val('');
-            $(`#category-name-${id}`).text($('#createCategoryInput').val());
-            $('#createCategoryInput').val('');
+            $('#region-id').val('');
+            $(`#region-name-${id}`).text($('#createRegionInput').val());
+            $('#createRegionInput').val('');
             $('#createButton').text('Create');
             $('#modal1').modal('close');
         }
 
     });
 
-    function appendCategoryToTable(category) {
-        $('#categories').append(`
+    function appendRegionToTable(region) {
+        $('#regions').append(`
             <tr>
-            <td>${category.id}</td>
-            <td id="category-name-${category.id}">${category.name}</td>
+            <td>${region.id}</td>
+            <td id="region-name-${region.id}">${region.name}</td>
             <td>
-                <button value="${category.id}" class="delete-btn btn waves-effect waves-light">Delete</button>
-                <button value="${category.id}" class="update-btn btn waves-effect waves-light">Update</button>
+                <button value="${region.id}" class="delete-btn btn waves-effect waves-light">Delete</button>
+                <button value="${region.id}" class="update-btn btn waves-effect waves-light">Update</button>
             </td>
             </tr>
         `)
@@ -70,11 +69,11 @@ $(document).ready(function () {
         $('.delete-btn').click((e) => {
             let id = e.target.value;
             $.ajax({
-                url: 'http://localhost:8080/category?id=' + id,
+                url: 'http://localhost:8080/region?id=' + id,
                 type: 'delete',
                 success: function () {
                     $(e.target.parentElement.parentElement).slideUp();
-                    console.log('Category with id=' + id + ' is deleted')
+                    console.log('Region with id=' + id + ' is deleted')
                 }
             });
         })
@@ -85,8 +84,8 @@ $(document).ready(function () {
             let id = e.target.value;
             $('#createButton').text('Update');
             $('#modal1').modal('open');
-            $('#category-id').val(id);
-            $('#createCategoryInput').val($(`#category-name-${id}`).text());
+            $('#region-id').val(id);
+            $('#createRegionInput').val($(`#region-name-${id}`).text());
         })
     }
 

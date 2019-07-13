@@ -17,7 +17,18 @@ public class RegionService {
     private RegionRepository regionRepository;
 
     public void create(RegionRequest request) {
-        Region region = new Region();
+        save(new Region(), request);
+    }
+
+    public void update(Long id, RegionRequest request) {
+        save(findById(id), request);
+    }
+
+    public void delete(Long id) {
+        regionRepository.delete(findById(id));
+    }
+
+    private void save(Region region, RegionRequest request) {
         region.setName(request.getName());
         regionRepository.save(region);
     }

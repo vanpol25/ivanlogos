@@ -24,6 +24,10 @@ public class CategoryService {
         save(findById(id), request);
     }
 
+    public void delete(Long id) {
+        categoryRepository.delete(findById(id));
+    }
+
     private void save(Category category, CategoryRequest request) {
         category.setName(request.getName());
         categoryRepository.save(category);
@@ -38,10 +42,6 @@ public class CategoryService {
     public Category findById(Long id) {
         return categoryRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Category with id=" + id + " not exists"));
-    }
-
-    public void delete(Long id) {
-        categoryRepository.delete(findById(id));
     }
 
 }
