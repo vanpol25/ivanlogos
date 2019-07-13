@@ -1,0 +1,34 @@
+* {
+    margin: 1px;
+    padding: 0;
+}
+
+.pane {
+    display: flex;
+    justify-content: normal;
+}
+
+.topPane {
+    background-color: #3C3F41;
+    min-height: 50px;
+}
+
+.leftPane {
+    background-color: #0098D0;
+    width: 22%;
+}
+
+.mainPane {
+    background-color: #F7F7F7;
+    width: 78%;
+}
+
+.bottomPane {
+    background-color: #F1F1F1;;
+    height: 50px;
+}
+.img {
+    background: center/cover no-repeat;
+    height: 500px;
+}
+
