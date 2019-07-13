@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/region")
 public class RegionController {
@@ -16,7 +18,7 @@ public class RegionController {
     private RegionService regionService;
 
     @PostMapping
-    public void create(@RequestBody RegionRequest request) {
+    public void create(@Valid @RequestBody RegionRequest request) {
         regionService.create(request);
     }
 

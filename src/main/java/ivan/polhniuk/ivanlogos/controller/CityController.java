@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/city")
 public class CityController {
@@ -16,7 +18,7 @@ public class CityController {
     private CityService cityService;
 
     @PostMapping
-    private void create(@RequestBody CityRequest request) {
+    private void create(@Valid @RequestBody CityRequest request) {
         cityService.create(request);
     }
 

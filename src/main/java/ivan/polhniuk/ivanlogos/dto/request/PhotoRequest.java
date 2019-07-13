@@ -12,7 +12,6 @@ import javax.validation.constraints.NotNull;
 public class PhotoRequest {
 
     private String link;
-    @NotNull
     private Long productId;
 
 }

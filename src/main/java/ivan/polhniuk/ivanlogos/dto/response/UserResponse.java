@@ -16,6 +16,7 @@ public class UserResponse {
     private String email;
     private String password;
     private String phone_number;
+    private Long cityId;
 
 
     public UserResponse(User user) {
@@ -24,6 +25,7 @@ public class UserResponse {
         email = user.getEmail();
         password = user.getPassword();
         phone_number = user.getPhone_number();
+        cityId = user.getCity().getId();
     }
 }
 

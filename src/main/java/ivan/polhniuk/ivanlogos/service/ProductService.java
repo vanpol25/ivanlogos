@@ -1,5 +1,6 @@
 package ivan.polhniuk.ivanlogos.service;
 
+import ivan.polhniuk.ivanlogos.config.Lorem;
 import ivan.polhniuk.ivanlogos.dto.request.PaginationRequest;
 import ivan.polhniuk.ivanlogos.dto.request.ProductRequest;
 import ivan.polhniuk.ivanlogos.dto.response.PageResponse;
@@ -58,9 +59,9 @@ public class ProductService {
     }
 
     private void updateReviews(Long id) {
-        Product byId = findById(id);
-        byId.setReviews(byId.getReviews() + 1);
-        productRepository.save(byId);
+        Product product = findById(id);
+        product.setReviews(product.getReviews() + 1);
+        productRepository.save(product);
     }
 
     private Product save(Product product, ProductRequest request) {
@@ -68,12 +69,20 @@ public class ProductService {
             product = new Product();
         }
         product.setName(request.getName());
-        product.setDescription(request.getDescription());
+        if (request.getDescription() != null) {
+            product.setDescription(request.getDescription());
+        } else {
+            product.setDescription(Lorem.lorem);
+        }
         product.setPrice(request.getPrice());
         product.setDate_published(Date.valueOf(LocalDate.now()));
         product.setSubCategory(subCategoryService.findById(request.getSubCategoryId()));
-        product.setCity(cityService.findById(request.getCityId()));
         product.setUser(userService.findById(request.getUserId()));
+        if (request.getCityId() != null) {
+            product.setCity(cityService.findById(request.getCityId()));
+        } else {
+            product.setCity(userService.findById(request.getUserId()).getCity());
+        }
         return product;
     }
 
@@ -83,4 +92,14 @@ public class ProductService {
                 .collect(Collectors.toList());
     }
 
+    //!!!For tests
+    public void addDescription() {
+        List<Product> all = productRepository.getAll();
+        all.forEach(e -> {
+            if (e.getDescription() == null || e.getDescription().isEmpty()) {
+                e.setDescription(Lorem.lorem);
+                productRepository.save(e);
+            }
+        });
+    }
 }

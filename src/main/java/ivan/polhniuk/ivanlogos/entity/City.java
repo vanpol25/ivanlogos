@@ -26,4 +26,7 @@ public class City {
     @OneToMany(mappedBy = "city")
     private List<Product> products = new ArrayList<>();
 
+    @OneToMany(mappedBy = "city")
+    private List<Product> users = new ArrayList<>();
+
 }

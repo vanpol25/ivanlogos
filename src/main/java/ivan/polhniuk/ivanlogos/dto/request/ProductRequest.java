@@ -3,11 +3,7 @@ package ivan.polhniuk.ivanlogos.dto.request;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import java.sql.Date;
+import javax.validation.constraints.*;
 
 @Getter
 @Setter
@@ -18,12 +14,10 @@ public class ProductRequest {
     private String name;
     private String description;
     @NotNull
+    @Positive
     private Integer price;
-//    @NotNull
-//    private Date date_published;
     @NotNull
     private Long subCategoryId;
-    @NotNull
     private Long cityId;
     @NotNull
     private Long userId;

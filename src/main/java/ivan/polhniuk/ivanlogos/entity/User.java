@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,14 +14,16 @@ import java.util.List;
 @NoArgsConstructor
 
 @Entity
-@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"name", "email"})})
+//@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"name", "email"})})
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "name", unique = true)
     private String name;
 
+    @Column(name = "email", unique = true)
     private String email;
 
     private String password;
@@ -29,6 +32,9 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     private List<Product> products = new ArrayList<>();
+
+    @ManyToOne
+    private City city;
 
     @ManyToMany
     private List<Product> favorite = new ArrayList<>();

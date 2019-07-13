@@ -8,11 +8,11 @@ import lombok.Setter;
 @Setter
 
 public class CategoryResponse {
-    private String name;
     private Long id;
+    private String name;
 
     public CategoryResponse(Category category) {
-        name = category.getName();
         id = category.getId();
+        name = category.getName();
     }
 }

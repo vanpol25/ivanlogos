@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/photo")
 public class PhotoController {
@@ -16,7 +18,7 @@ public class PhotoController {
     private PhotoService photoService;
 
     @PostMapping
-    public void create(@RequestBody PhotoRequest request) {
+    public void create(@Valid @RequestBody PhotoRequest request) {
         photoService.create(request);
     }
 

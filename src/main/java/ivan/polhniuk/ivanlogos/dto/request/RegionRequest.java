@@ -9,7 +9,7 @@ import javax.validation.constraints.NotBlank;
 @Setter
 
 public class RegionRequest {
-    @NotBlank
+
     private String name;
 
 }

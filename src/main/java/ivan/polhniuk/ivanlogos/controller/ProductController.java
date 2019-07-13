@@ -18,12 +18,12 @@ public class ProductController {
     private ProductService productService;
 
     @PostMapping
-    public void create(@RequestBody ProductRequest request) {
+    public void create(@Valid @RequestBody ProductRequest request) {
         productService.create(request);
     }
 
     @PutMapping
-    public void update(Long id, @RequestBody ProductRequest request) {
+    public void update(Long id, @Valid @RequestBody ProductRequest request) {
         productService.update(id, request);
     }
 

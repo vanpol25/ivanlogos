@@ -10,9 +10,8 @@ import javax.validation.constraints.NotNull;
 @Setter
 
 public class CityRequest {
-    @NotBlank
+
     private String name;
-    @NotNull
     private Long regionId;
 
 }

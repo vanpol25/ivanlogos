@@ -12,10 +12,7 @@ import javax.validation.constraints.Size;
 
 public class SubCategoryRequest {
 
-    @NotBlank
-    @Size(min = 4)
     private String name;
-    @NotNull
     private Long categoryId;
 
 }

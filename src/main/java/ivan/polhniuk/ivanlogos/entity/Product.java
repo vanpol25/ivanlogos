@@ -1,10 +1,12 @@
 package ivan.polhniuk.ivanlogos.entity;
 
+import ivan.polhniuk.ivanlogos.config.Lorem;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,9 +31,8 @@ public class Product {
 
     private Date date_published;
 
-    //!!!Ask about!!!
-    @Column()
-    private Long reviews = 0L;
+    @Column(columnDefinition = "bigint default 0")
+    private Long reviews;
 
     @ManyToOne
     private SubCategory subCategory;

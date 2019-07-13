@@ -17,7 +17,14 @@ public class CategoryService {
     private CategoryRepository categoryRepository;
 
     public void create(CategoryRequest request) {
-        Category category = new Category();
+        save(new Category(), request);
+    }
+
+    public void update(Long id, CategoryRequest request) {
+        save(findById(id), request);
+    }
+
+    private void save(Category category, CategoryRequest request) {
         category.setName(request.getName());
         categoryRepository.save(category);
     }
@@ -31,6 +38,10 @@ public class CategoryService {
     public Category findById(Long id) {
         return categoryRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Category with id=" + id + " not exists"));
+    }
+
+    public void delete(Long id) {
+        categoryRepository.delete(findById(id));
     }
 
 }

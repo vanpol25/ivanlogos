@@ -9,7 +9,6 @@ import javax.validation.constraints.NotBlank;
 @Setter
 
 public class CategoryRequest {
-
     @NotBlank
     private String name;
 
