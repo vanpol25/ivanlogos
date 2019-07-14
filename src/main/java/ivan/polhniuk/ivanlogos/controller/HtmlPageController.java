@@ -1,7 +1,6 @@
 package ivan.polhniuk.ivanlogos.controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -21,5 +20,16 @@ public class HtmlPageController {
     public String region() {
         return "admin/regions.html";
     }
+
+    @RequestMapping("item")
+    public String item(Long id) {
+        return "productPage.html";
+    }
+
+    @RequestMapping("products")
+    public String product() {
+        return "products.html";
+    }
+
 }
 

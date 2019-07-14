@@ -3,6 +3,7 @@ package ivan.polhniuk.ivanlogos.controller;
 import ivan.polhniuk.ivanlogos.dto.request.PaginationRequest;
 import ivan.polhniuk.ivanlogos.dto.request.ProductRequest;
 import ivan.polhniuk.ivanlogos.dto.response.PageResponse;
+import ivan.polhniuk.ivanlogos.dto.response.ProductFullResponse;
 import ivan.polhniuk.ivanlogos.dto.response.ProductResponse;
 import ivan.polhniuk.ivanlogos.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,4 +38,10 @@ public class ProductController {
     public PageResponse<ProductResponse> findPage(@Valid PaginationRequest paginationRequest) {
         return productService.findPage(paginationRequest);
     }
+
+    @GetMapping("item")
+    public ProductFullResponse findOne(Long id) {
+        return new ProductFullResponse(productService.findById(id));
+    }
+
 }

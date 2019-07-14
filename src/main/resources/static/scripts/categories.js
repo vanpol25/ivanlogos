@@ -1,4 +1,7 @@
 $(document).ready(function () {
+
+    $(".left-pane").load('../admin/listAdmin.html');
+
     $('#modal1').modal();
 
     $.ajax({

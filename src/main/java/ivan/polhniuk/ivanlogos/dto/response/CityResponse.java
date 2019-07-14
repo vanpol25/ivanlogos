@@ -1,6 +1,7 @@
 package ivan.polhniuk.ivanlogos.dto.response;
 
 import ivan.polhniuk.ivanlogos.entity.City;
+import ivan.polhniuk.ivanlogos.entity.Region;
 import lombok.Getter;
 import lombok.Setter;
 

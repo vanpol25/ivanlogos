@@ -5,6 +5,7 @@ import ivan.polhniuk.ivanlogos.dto.request.PaginationRequest;
 import ivan.polhniuk.ivanlogos.dto.request.ProductRequest;
 import ivan.polhniuk.ivanlogos.dto.response.PageResponse;
 import ivan.polhniuk.ivanlogos.dto.response.ProductResponse;
+import ivan.polhniuk.ivanlogos.dto.response.ProductFullResponse;
 import ivan.polhniuk.ivanlogos.entity.Product;
 import ivan.polhniuk.ivanlogos.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,20 +87,13 @@ public class ProductService {
         return product;
     }
 
-    public List<ProductResponse> findAll() {
+    public List<ProductFullResponse> findAll() {
         return productRepository.findAll().stream()
-                .map(ProductResponse::new)
+                .map(ProductFullResponse::new)
                 .collect(Collectors.toList());
     }
 
-    //!!!For tests
-    public void addDescription() {
-        List<Product> all = productRepository.getAll();
-        all.forEach(e -> {
-            if (e.getDescription() == null || e.getDescription().isEmpty()) {
-                e.setDescription(Lorem.lorem);
-                productRepository.save(e);
-            }
-        });
+    public ProductFullResponse findOne(Long id) {
+        return new ProductFullResponse(findById(id));
     }
 }

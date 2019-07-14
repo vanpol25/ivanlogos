@@ -2,31 +2,51 @@ $(document).ready(function () {
 
     $(".left-pane").load('../admin/listAdmin.html');
 
-    $('#modal1').modal();
-
     $.ajax({
         url: 'http://localhost:8080/region',
         type: 'get',
         success: function (response) {
             for (let region of response) {
-                appendRegionToTable(region);
+                $('#selector').append(`<option value="${region.id}">${region.name}</option>`);
             }
-            onDeleteBtn();
-            onUpdateBtn();
         }
     });
 
+    $.ajax({
+        url: 'http://localhost:8080/city',
+        type: 'get',
+        success: function (response) {
+            for (let city of response) {
+                appendCityToTable(city);
+                appendRegionName(city.regionId, city.id);
+            }
+            onDeleteBtn();
+            onUpdateBtn();
+
+        }
+    });
+
+    function appendRegionName(regionId, id) {
+        let $nameRegion = $(`#selector [value='${regionId}']`).text();
+        $(`#city-name-${id}`).after(`<td id="city-region-id-${id}">${$nameRegion}</td>`)
+    }
+
     $('#createButton').click(function () {
+
         let request = {
-            name: $('#createRegionInput').val()
+            name: $('#createCityInput').val(),
+            regionId: $('#selector :selected').val()
         };
 
-        let id = $('#region-id').val();
+        console.log($("#selector [value='2']").text());
 
-        console.log(id + ' - ' + $('#createRegionInput').val());
+        return;
+
+        let id = $('#city-id').val();
+
         if (id === '') {
             $.ajax({
-                url: 'http://localhost:8080/region',
+                url: 'http://localhost:8080/city',
                 contentType: 'application/json',
                 type: 'post',
                 data: JSON.stringify(request),
@@ -37,32 +57,27 @@ $(document).ready(function () {
             location.reload();
         } else {
             $.ajax({
-                url: 'http://localhost:8080/region?id=' + id,
+                url: 'http://localhost:8080/city?id=' + id,
                 contentType: 'application/json',
                 type: 'put',
                 data: JSON.stringify(request),
                 success: function (response) {
                     console.log(response);
-
                 }
             });
-            $('#region-id').val('');
-            $(`#region-name-${id}`).text($('#createRegionInput').val());
-            $('#createRegionInput').val('');
-            $('#createButton').text('Create');
-            $('#modal1').modal('close');
+            location.reload();
         }
 
     });
 
-    function appendRegionToTable(region) {
-        $('#regions').append(`
+    function appendCityToTable(city) {
+        $('#cities').append(`
             <tr>
-            <td>${region.id}</td>
-            <td id="region-name-${region.id}">${region.name}</td>
+            <td>${city.id}</td>
+            <td id="city-name-${city.id}">${city.name}</td>
             <td>
-                <button value="${region.id}" class="delete-btn btn waves-effect waves-light">Delete</button>
-                <button value="${region.id}" class="update-btn btn waves-effect waves-light">Update</button>
+                <button value="${city.id}" class="delete-btn btn waves-effect waves-light">Delete</button>
+                <button value="${city.id}" class="update-btn btn waves-effect waves-light">Update</button>
             </td>
             </tr>
         `)
@@ -72,11 +87,11 @@ $(document).ready(function () {
         $('.delete-btn').click((e) => {
             let id = e.target.value;
             $.ajax({
-                url: 'http://localhost:8080/region?id=' + id,
+                url: 'http://localhost:8080/city?id=' + id,
                 type: 'delete',
                 success: function () {
                     $(e.target.parentElement.parentElement).slideUp();
-                    console.log('Region with id=' + id + ' is deleted')
+                    console.log('City with id=' + id + ' is deleted')
                 }
             });
         })
@@ -87,9 +102,12 @@ $(document).ready(function () {
             let id = e.target.value;
             $('#createButton').text('Update');
             $('#modal1').modal('open');
-            $('#region-id').val(id);
-            $('#createRegionInput').val($(`#region-name-${id}`).text());
+            $('#city-id').val(id);
+            $('#createCityInput').val($(`#city-name-${id}`).text());
+            $('#createCityInputRegionId').val($(`#city-region-id-${id}`).text());
         })
     }
+
+    $('#modal1').modal();
 
 });

@@ -1,6 +1,7 @@
 package ivan.polhniuk.ivanlogos.controller;
 
 import ivan.polhniuk.ivanlogos.dto.request.RegionRequest;
+import ivan.polhniuk.ivanlogos.dto.response.CityResponse;
 import ivan.polhniuk.ivanlogos.dto.response.RegionResponse;
 import ivan.polhniuk.ivanlogos.service.RegionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,11 @@ public class RegionController {
     @GetMapping
     public List<RegionResponse> findAll() {
         return regionService.findAll();
+    }
+
+    @GetMapping("one")
+    public RegionResponse findOne(Long id) {
+        return new RegionResponse(regionService.findById(id));
     }
 
 }

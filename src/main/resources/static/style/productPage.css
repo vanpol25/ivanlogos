@@ -1,0 +1,29 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.content {
+    display: flex;
+    justify-content: normal;
+}
+
+.item {
+    width: 230px;
+    height: 300px;
+}
+
+.item img {
+    width: 100%;
+}
+
+.left-pane {
+    width: 23%;
+}
+
+.right-pane {
+    width: 77%;
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
