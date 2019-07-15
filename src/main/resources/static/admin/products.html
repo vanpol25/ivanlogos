@@ -2,60 +2,84 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Product admin</title>
+    <title>Region admin</title>
     <link rel="stylesheet" href="../style/materialize.min.css">
-    <link rel="stylesheet" href="../style/productPage.css">
+    <link rel="stylesheet" href="../style/shop.css">
     <script src="../scripts/jquery-3.4.1.min.js"></script>
     <script src="../scripts/materialize.min.js"></script>
     <script src="../scripts/products.js"></script>
 </head>
 <body>
+<div class="top-pane">
+    <nav>
+        <div class="nav-wrapper">
+            <a href="#!" class="brand-logo">Logo</a>
+            <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+            <ul class="right hide-on-med-and-down"></ul>
+        </div>
+    </nav>
 
-<div class="content">
-    <div class="left-pane">
-
-    </div>
-    <div class="right-pane">
-        <div class="item">
-            <img src="../images/a3.jpg">
-            <p>$10000</p>
-            <h4>Lorem ipsum dolor</h4>
-        </div>
-        <div class="item">
-            <img src="../images/a3.jpg">
-            <p>$10000</p>
-            <h4>Lorem ipsum dolor</h4>
-        </div>
-        <div class="item">
-            <img src="../images/a3.jpg">
-            <p>$10000</p>
-            <h4>Lorem ipsum dolor</h4>
-        </div>
-        <div class="item">
-            <img src="../images/a3.jpg">
-            <p>$10000</p>
-            <h4>Lorem ipsum dolor</h4>
-        </div>
-        <div class="item">
-            <img src="../images/a3.jpg">
-            <p>$10000</p>
-            <h4>Lorem ipsum dolor</h4>
-        </div>
-        <div class="item">
-            <img src="../images/a3.jpg">
-            <p>$10000</p>
-            <h4>Lorem ipsum dolor</h4>
-        </div>
-        <div class="item">
-            <img src="../images/a3.jpg">
-            <p>$10000</p>
-            <h4>Lorem ipsum dolor</h4>
-        </div>
-    </div>
+    <ul class="sidenav" id="mobile-demo">
+        <input id="productId" value="" type="text" style="display: none">
+        Name
+        <li><input id="nameInput" type="text"></li>
+        Description
+        <li><textarea id="descriptionInput"></textarea></li>
+        Price
+        <li><input id="priceInput" type="number"></li>
+        <li>
+            <select id="subCategorySelector">
+                <option selected disabled>Choose a subCategory</option>
+            </select>
+        </li>
+    </ul>
 </div>
 
-<div class="bottom">
+<div class="content">
+    <div class="item">
+        <img src="../images/a3.jpg">
+        <p>$10000</p>
+        <div id="nameProduct">
+            Lorem ipsum dolor
+            <button value="1" class="update-btn btn waves-effect waves-light">Update</button>
+        </div>
+    </div>
+    <div class="item">
+        <img src="../images/a3.jpg">
+        <p>$10000</p>
+        <h4>Lorem ipsum dolor</h4>
+    </div>
+    <div class="item">
+        <img src="../images/a3.jpg">
+        <p>$10000</p>
+        <h4>Lorem ipsum dolor</h4>
+    </div>
+    <div class="item">
+        <img src="../images/a3.jpg">
+        <p>$10000</p>
+        <h4>Lorem ipsum dolor</h4>
+    </div>
+    <div class="item">
+        <img src="../images/a3.jpg">
+        <p>$10000</p>
+        <h4>Lorem ipsum dolor</h4>
+    </div>
+    <div class="item">
+        <img src="../images/a3.jpg">
+        <p>$10000</p>
+        <h4>Lorem ipsum dolor</h4>
+    </div>
+    <div class="item">
+        <img src="../images/a3.jpg">
+        <p>$10000</p>
+        <h4>Lorem ipsum dolor</h4>
+    </div>
 
+</div>
+<div class="pages">
+    <a id="btn1" class="waves-effect waves-teal btn-flat">1</a>
+    <a class="waves-effect waves-teal btn-flat">2</a>
+    <a class="waves-effect waves-teal btn-flat">3</a>
 </div>
 
 </body>

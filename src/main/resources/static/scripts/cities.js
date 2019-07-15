@@ -38,10 +38,6 @@ $(document).ready(function () {
             regionId: $('#selector :selected').val()
         };
 
-        console.log($("#selector [value='2']").text());
-
-        return;
-
         let id = $('#city-id').val();
 
         if (id === '') {

@@ -27,14 +27,16 @@
     background-color: #F1F1F1;;
     height: 50px;
 }
+
 .img {
     background: center/cover no-repeat;
-    height: 500px;
+    width: 50px;
 }
 
 .content {
     display: flex;
-    justify-content: normal;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
 .left-pane {
@@ -43,4 +45,30 @@
 
 select {
     font-size: 14px;
+    display: initial;
+}
+
+.item {
+    border-style: solid;
+    border-color: grey;
+    border-radius: 5px;
+    border-width: 2px;
+    padding: 3px;
+    margin: 5px;
+    height: 300px;
+    width: 300px;
+}
+
+.item img {
+    width: 100%;
+}
+
+.pages {
+    display: flex;
+    justify-content: center;
+}
+
+#nameProduct {
+    display: flex;
+    justify-content: normal;
 }

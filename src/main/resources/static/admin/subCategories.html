@@ -2,20 +2,26 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Products admin</title>
-    <link rel="stylesheet" href="../style/shop.css">
+    <title>SubCategories admin</title>
     <link rel="stylesheet" href="../style/materialize.min.css">
+    <link rel="stylesheet" href="../style/shop.css">
     <script src="../scripts/jquery-3.4.1.min.js"></script>
+    <script src="../scripts/subCategories.js"></script>
     <script src="../scripts/materialize.min.js"></script>
-    <script src="../scripts/regions.js"></script>
 </head>
 <body>
 <div class="top-pane">
-    <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Add new region</a>
+    <button data-target="modal1" class="btn modal-trigger">Add new subCategory</button>
     <div id="modal1" class="modal">
-        <div class="modal-content">
-            <input type="text" id="region-id" style="display:none">
-            <input id="createRegionInput" type="text">
+        <div class="modalWindow modal-content">
+            <input type="text" id="subCategory-id" style="display:none">
+            Name<input id="createSubCategoryInput" type="text" class="validate">
+            <div class="input-field col s12">
+                <select id="selector">
+                    <option value="" disabled selected>Choose category</option>
+                </select>
+            </div>
+            <input id="createSubCategoryInputCategoryId" type="text" style="display: none">
             <button id="createButton" class="btn waves-effect waves-light">Create</button>
         </div>
     </div>
@@ -32,10 +38,11 @@
             <tr>
                 <th>ID</th>
                 <th>Name</th>
+                <th>Category</th>
                 <th>Action</th>
             </tr>
             </thead>
-            <tbody id="regions"></tbody>
+            <tbody id="subCategories"></tbody>
         </table>
     </div>
 </div>
