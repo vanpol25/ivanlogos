@@ -1,6 +1,5 @@
 package ivan.polahniuk.ivanLogos.service;
 
-import ivan.polahniuk.ivanLogos.dto.request.PhotoRequest;
 import ivan.polahniuk.ivanLogos.entity.Photo;
 import ivan.polahniuk.ivanLogos.repository.PhotoRepository;
 import ivan.polahniuk.ivanLogos.dto.response.PhotoResponse;
@@ -16,16 +15,15 @@ public class PhotoService {
     @Autowired
     private PhotoRepository photoRepository;
 
-    @Autowired
-    private ProductService productService;
-
-    public void create(PhotoRequest request) {
+    public void create(String name, Long id) {
         Photo photo = new Photo();
-        if (request.getData()==null
-        )
-        photo.setData(request.getData());
-        photo.setProduct(productService.findById(request.getProductId()));
+        photo.setName(name);
+        photo.setId(id);
         photoRepository.save(photo);
+    }
+
+    public void delete(Long id) {
+        photoRepository.delete(findById(id));
     }
 
     public Photo findById(Long id) {

@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 public class PhotoRequest {
     @NotBlank
     @NotNull
-    private String data;
+    private String name;
     @NotNull
     private Long productId;
 

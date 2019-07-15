@@ -10,12 +10,12 @@ import lombok.Setter;
 public class PhotoResponse {
 
     private Long id;
-    private String data;
+    private String name;
     private Long productId;
 
     public PhotoResponse(Photo photo) {
         id = photo.getId();
-        data = photo.getName();
+        name = photo.getName();
         productId = photo.getProduct().getId();
     }
 }

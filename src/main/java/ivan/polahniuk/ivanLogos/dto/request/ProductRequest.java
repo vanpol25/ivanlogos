@@ -9,6 +9,7 @@ import javax.validation.constraints.*;
 @Setter
 
 public class ProductRequest {
+
     @NotBlank
     @Size(min = 4)
     private String name;
