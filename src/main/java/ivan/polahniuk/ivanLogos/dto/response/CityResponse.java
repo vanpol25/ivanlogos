@@ -11,11 +11,11 @@ public class CityResponse {
 
     private Long id;
     private String name;
-    private Long regionId;
+    private RegionResponse region;
 
     public CityResponse(City city) {
         id = city.getId();
         name = city.getName();
-        regionId = city.getRegion().getId();
+        region = new RegionResponse(city.getRegion());
     }
 }

@@ -11,11 +11,11 @@ public class SubCategoryResponse {
 
     private Long id;
     private String name;
-    private Long categoryId;
+    private CategoryResponse category;
 
     public SubCategoryResponse(SubCategory subCategory) {
         id = subCategory.getId();
         name = subCategory.getName();
-        categoryId = subCategory.getCategory().getId();
+        category = new CategoryResponse(subCategory.getCategory());
     }
 }

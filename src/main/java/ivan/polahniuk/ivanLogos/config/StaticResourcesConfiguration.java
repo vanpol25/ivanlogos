@@ -8,7 +8,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.nio.file.Paths;
 
-import static ivan.polahniuk.ivanLogos.service.FileService.IMG_DIR;
+import static ivan.polahniuk.ivanLogos.service.ProductService.IMG_DIR;
 
 @Configuration
 @AutoConfigureAfter(DispatcherServletAutoConfiguration.class)

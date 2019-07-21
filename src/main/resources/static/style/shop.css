@@ -13,11 +13,6 @@
     min-height: 50px;
 }
 
-.leftPane {
-    background-color: #0098D0;
-    width: 22%;
-}
-
 .mainPane {
     background-color: #F7F7F7;
     width: 78%;
@@ -35,12 +30,21 @@
 
 .content {
     display: flex;
+    justify-content: normal;
+}
+
+.contentProduct {
+    display: flex;
     justify-content: center;
     flex-wrap: wrap;
+    margin-left: 11%;
+    margin-right: 11%;
 }
 
 .left-pane {
     background-color: #E5E5E5;
+    width: 22%;
+    min-width: 250px;
 }
 
 select {
@@ -57,10 +61,13 @@ select {
     margin: 5px;
     height: 300px;
     width: 300px;
+    display: grid;
+    justify-content: center;
 }
 
-.item img {
-    width: 100%;
+.img-item {
+    max-width: 100%;
+    max-height: 192px;
 }
 
 .pages {
@@ -71,4 +78,38 @@ select {
 #nameProduct {
     display: flex;
     justify-content: normal;
+}
+
+.linkToProduct {
+    font-size: 1.5rem;
+}
+
+.sidenav {
+    min-width: 450px;
+    width: 35%;
+}
+
+#image-control img {
+    width: 300px;
+}
+
+.controllers {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#selectPage {
+    width: 60px;
+}
+
+.photo-editor {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.photo-editor img{
+    width: 85%;
+    min-width: 85%;
 }

@@ -14,30 +14,32 @@ import static ivan.polahniuk.ivanLogos.service.ProductService.IMG_DIR;
 @Service
 public class FileService {
 
-    public String saveFile(String img, String name) throws IOException {
+    public String saveFile(String img) throws IOException {
         createDir(IMG_DIR);//create folder if not exists
 
         String[] data = img.split(",");
         String metaInfo = data[0];
         String base64File = data[1];
 
-        String fileName = createFileName(name,
-                getFileExtensionFromMetaInfo(metaInfo));
+        String fileName = createFileName(getFileExtensionFromMetaInfo(metaInfo));
 
         Files.write(
                 Paths.get(IMG_DIR, fileName),
                 Base64.getDecoder().decode(base64File.getBytes())
         );
+
         return fileName;
     }
 
-    private String createFileName(String fileName, String fileExtension) {
-        if (fileName == null) {
-            fileName = UUID.randomUUID().toString();
-        }
+    public void deleteFile(String img) throws IOException {
+        Files.delete(Paths.get(IMG_DIR, img));
+    }
+
+    private String createFileName(String fileExtension) {
+        String fileName = UUID.randomUUID().toString();
         return String.format("%s.%s", fileName, fileExtension);
     }
-    //data:image/jpeg;base64
+
     private String getFileExtensionFromMetaInfo(String metaInfo) {
         return metaInfo.split("/")[1].split(";")[0];
     }

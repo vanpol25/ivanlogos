@@ -1,6 +1,7 @@
 package ivan.polahniuk.ivanLogos.controller;
 
 import ivan.polahniuk.ivanLogos.dto.request.PaginationRequest;
+import ivan.polahniuk.ivanLogos.dto.request.ProductCriteria;
 import ivan.polahniuk.ivanLogos.dto.request.ProductRequest;
 import ivan.polahniuk.ivanLogos.dto.response.ProductFullResponse;
 import ivan.polahniuk.ivanLogos.service.ProductService;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @CrossOrigin
 @RestController
@@ -20,13 +22,13 @@ public class ProductController {
     private ProductService productService;
 
     @PostMapping
-    public void create(@Valid @RequestBody ProductRequest request) {
-        productService.create(request);
+    public Long create(@Valid @RequestBody ProductRequest request) {
+        return productService.create(request);
     }
 
     @PutMapping
-    public void update(Long id, @Valid @RequestBody ProductRequest request) {
-        productService.update(id, request);
+    public Long update(Long id, @Valid @RequestBody ProductRequest request) {
+        return productService.update(id, request);
     }
 
     @DeleteMapping
@@ -41,7 +43,12 @@ public class ProductController {
 
     @GetMapping("item")
     public ProductFullResponse findOne(Long id) {
-        return new ProductFullResponse(productService.findById(id));
+        return productService.findOne(id);
+    }
+
+    @PostMapping("findByFilter")
+    public List<ProductResponse> findByFilter(@Valid @RequestBody ProductCriteria criteria) {
+        return productService.findByCriteria(criteria);
     }
 
 }

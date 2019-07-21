@@ -1,5 +1,6 @@
 package ivan.polahniuk.ivanLogos.service;
 
+import ivan.polahniuk.ivanLogos.dto.request.ProductCriteria;
 import ivan.polahniuk.ivanLogos.dto.response.ProductFullResponse;
 import ivan.polahniuk.ivanLogos.entity.Product;
 import ivan.polahniuk.ivanLogos.repository.ProductRepository;
@@ -8,11 +9,13 @@ import ivan.polahniuk.ivanLogos.dto.request.PaginationRequest;
 import ivan.polahniuk.ivanLogos.dto.request.ProductRequest;
 import ivan.polahniuk.ivanLogos.dto.response.PageResponse;
 import ivan.polahniuk.ivanLogos.dto.response.ProductResponse;
+import ivan.polahniuk.ivanLogos.specification.ProductSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
+import java.io.IOException;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
@@ -24,6 +27,8 @@ public class ProductService {
     public static final String IMG_DIR =
             System.getProperty("user.home") + File.separator +
                     "shop-images" + File.separator;
+
+    public static final String EMPTY_IMG = "empty.png";
 
     @Autowired
     private ProductRepository productRepository;
@@ -37,27 +42,35 @@ public class ProductService {
     @Autowired
     private CityService cityService;
 
-    public void create(ProductRequest request) {
-        productRepository.save(save(null, request));
+    @Autowired
+    private PhotoService photoService;
+
+    public Long create(ProductRequest request) {
+       return save(new Product(), request);
     }
 
-    public void update(Long id, ProductRequest request) {
-        productRepository.save(save(findById(id), request));
+    public Long update(Long id, ProductRequest request) {
+         return save(findById(id), request);
     }
 
     public void delete(Long id) {
-        productRepository.delete(findById(id));
+        Product product = findById(id);
+        product.getPhotos().forEach(o-> {
+            try {
+                photoService.delete(o.getId());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        productRepository.delete(product);
     }
 
-    private Product save(Product product, ProductRequest request) {
-        if (product == null) {
-            product = new Product();
-        }
+    private Long save(Product product, ProductRequest request) {
         product.setName(request.getName());
         if (request.getDescription() != null) {
             product.setDescription(request.getDescription());
         } else {
-            product.setDescription(Lorem.lorem);
+            product.setDescription(Lorem.LOREM);
         }
         product.setPrice(request.getPrice());
         product.setDate_published(Date.valueOf(LocalDate.now()));
@@ -68,13 +81,20 @@ public class ProductService {
         } else {
             product.setCity(userService.findById(request.getUserId()).getCity());
         }
-        product.setMainImg("empty.png");
-        return product;
+        if (product.getMainImg() == null) {
+            product.setMainImg(EMPTY_IMG);
+        }
+        productRepository.save(product);
+        return product.getId();
+    }
+
+    public List<ProductResponse> findByCriteria(ProductCriteria criteria) {
+        return productRepository.findAll(new ProductSpecification(criteria), criteria.getPaginationRequest().toPageable())
+                .stream().map(ProductResponse::new).collect(Collectors.toList());
     }
 
     public PageResponse<ProductResponse> findPage(PaginationRequest paginationRequest) {
         Page<Product> page = productRepository.findAll(paginationRequest.toPageable());
-        page.forEach(e -> updateReviews(e.getId()));
         return new PageResponse<>(page.getTotalPages(),
                 page.getTotalElements(),
                 page.get().
@@ -100,6 +120,7 @@ public class ProductService {
     }
 
     public ProductFullResponse findOne(Long id) {
+        updateReviews(id);
         return new ProductFullResponse(findById(id));
     }
 

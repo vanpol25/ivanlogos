@@ -18,7 +18,6 @@ public class ProductResponse {
         id = product.getId();
         name = product.getName();
         price = product.getPrice();
-        //fix it
-        mainImg = "";
+        mainImg = product.getMainImg();
     }
 }

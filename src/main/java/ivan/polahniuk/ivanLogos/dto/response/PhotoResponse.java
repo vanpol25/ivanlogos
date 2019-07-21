@@ -11,11 +11,9 @@ public class PhotoResponse {
 
     private Long id;
     private String name;
-    private Long productId;
 
     public PhotoResponse(Photo photo) {
         id = photo.getId();
         name = photo.getName();
-        productId = photo.getProduct().getId();
     }
 }

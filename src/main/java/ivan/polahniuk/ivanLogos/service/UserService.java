@@ -20,7 +20,18 @@ public class UserService {
     private CityService cityService;
 
     public void create(UserRequest request) {
-        User user = new User();
+        save(new User(), request);
+    }
+
+    public void update(Long id, UserRequest request) {
+        save(findById(id), request);
+    }
+
+    public void delete(Long id) {
+        userRepository.delete(findById(id));
+    }
+
+    private void save(User user, UserRequest request) {
         user.setName(request.getName());
         user.setEmail(request.getEmail());
         user.setPassword(request.getPassword());

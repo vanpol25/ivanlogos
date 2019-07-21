@@ -28,17 +28,12 @@ public class HtmlPageController {
 
     @RequestMapping("item")
     public String item(Long id) {
-        return "productPage.html";
+        return "admin/productPage.html";
     }
 
     @RequestMapping("products")
     public String product() {
         return "admin/products.html";
-    }
-
-    @RequestMapping("uploadFile")
-    public String file() {
-        return "fileUploader.html";
     }
 
 }
