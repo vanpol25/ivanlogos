@@ -8,9 +8,16 @@
     justify-content: normal;
 }
 
-.topPane {
-    background-color: #3C3F41;
+.top-pane {
+    display: flex;
+    justify-content: center;
+    flex-wrap: nowrap;
+    background-color: white;
     min-height: 50px;
+}
+
+#findByName {
+    width: 300px;
 }
 
 .mainPane {
@@ -92,6 +99,7 @@ select {
 .sidenav-filter {
     display: flex;
     justify-content: center;
+    flex-wrap: wrap;
     min-width: 300px;
 }
 
@@ -101,8 +109,7 @@ select {
 
 .controllers {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    justify-content: center;
 }
 
 #selectPage {

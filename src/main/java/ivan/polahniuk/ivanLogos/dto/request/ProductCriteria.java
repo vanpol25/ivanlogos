@@ -15,17 +15,9 @@ public class ProductCriteria {
     private Long subCategoryId;
     private Long categoryId;
     private Long cityId;
+    private Long regionId;
 
     @NotNull
     private PaginationRequest paginationRequest;
 
-    public ProductCriteria(ProductCriteria productCriteria){
-        this.name = name;
-        this.minPrice = minPrice;
-        this.maxPrice = maxPrice;
-        this.subCategoryId = subCategoryId;
-        this.categoryId = categoryId;
-        this.cityId = cityId;
-        this.paginationRequest = paginationRequest;
-    }
 }

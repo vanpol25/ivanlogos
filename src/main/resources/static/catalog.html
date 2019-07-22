@@ -3,14 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <title>Catalog</title>
+    <link rel="stylesheet" href="style/materialize.min.css">
+    <link rel="stylesheet" href="style/catalog.css">
+    <script src="scripts/jquery-3.4.1.min.js"></script>
+    <script src="scripts/materialize.min.js"></script>
+    <script src="scripts/catalog.js"></script>
 </head>
 <body>
-<div class="controller">
-    <select class="page-size">
-        <option value="2" selected>2</option>
-        <option value="5">5</option>
-        <option value="50">50</option>
-    </select>
+<div class="top-pane">
+    <input id="findByName" type="text" placeholder="Enter key word">
+    <button id="find" class="btn waves-effect waves-light">find</button>
+    <button id="filterBtn" data-target="slide-out" class="btn waves-effect waves-light sidenav-trigger">filter</button>
+    <div>
+        Page-size:
+        <select id="selectPage">
+            <option value="4" selected>4</option>
+            <option value="10">10</option>
+            <option value="100">100</option>
+        </select>
+    </div>
+    <ul id="slide-out" class="sidenav-filter sidenav">
+        <h4>Filter</h4>
+        <input id="min-priceFilter" type="number" placeholder="Min price">
+        <input id="max-priceFilter" type="number" placeholder="Max price">
+        <select id="regionFilter">
+            <option value="0" selected disabled>Choose region</option>
+        </select>
+        <select id="cityFilter">
+            <option value="0" selected disabled>Choose city</option>
+        </select>
+        <select id="subCategoryFilter">
+            <option value="0" selected disabled>Choose subCategory</option>
+        </select>
+        <select id="categoryFilter">
+            <option value="0" selected disabled>Choose category</option>
+        </select>
+    </ul>
+</div>
+<div class="content">
+    <div class="contentProduct"></div>
+</div>
+<div class="controllers">
+    <div>
+        <button id="prev" class="next-btn btn waves-effect waves-light">prev</button>
+        <span id="currentPage">1</span>
+        <button id="next" class="prev-btn btn waves-effect waves-light">next</button>
+    </div>
 </div>
 
 </body>

@@ -36,5 +36,10 @@ public class HtmlPageController {
         return "admin/products.html";
     }
 
+    @RequestMapping("catalog")
+    public String catalog() {
+        return "catalog.html";
+    }
+
 }
 
