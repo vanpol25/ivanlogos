@@ -34,12 +34,12 @@ $(document).ready(function () {
             <div class="item-inside-info">Price: $${responce.price}</div>
             <div class="item-inside-info">
                 ${responce.user.name}<br>
-                Telephone: ${responce.user.phone_number}<br>
+                Telephone: ${responce.user.phoneNumber}<br>
                 City: ${responce.city.name}, ${responce.city.region.name} region<br>
                 Email: ${responce.user.email}
             </div>
             <div class="item-inside-info">
-                Date published: ${responce.date_published}
+                Date published: ${responce.date}
             </div>
         `);
         $('#info').append(`

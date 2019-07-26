@@ -1,5 +1,5 @@
 * {
-    margin: 1px;
+    margin: 0;
     padding: 0;
 }
 
@@ -99,8 +99,14 @@ select {
 .sidenav-filter {
     display: flex;
     justify-content: center;
+    align-content: start;
     flex-wrap: wrap;
     min-width: 300px;
+}
+
+#slide-out2 {
+    display: flow-root;
+
 }
 
 #image-control img {

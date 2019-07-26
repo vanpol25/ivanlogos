@@ -13,10 +13,10 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static ivan.polahniuk.ivanLogos.service.ProductService.EMPTY_IMG;
-
 @Service
 public class PhotoService {
+
+    private static final String EMPTY_IMG = "empty.png";
 
     @Autowired
     private PhotoRepository photoRepository;

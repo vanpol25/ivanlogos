@@ -1,11 +1,8 @@
 package ivan.polahniuk.ivanLogos.dto.response;
 
-import ivan.polahniuk.ivanLogos.entity.Photo;
 import ivan.polahniuk.ivanLogos.entity.Product;
-import ivan.polahniuk.ivanLogos.service.PhotoService;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.sql.Date;
 import java.util.List;
@@ -20,7 +17,7 @@ public class ProductFullResponse {
     private String name;
     private String description;
     private Integer price;
-    private Date date_published;
+    private Date date;
     private Long reviews;
     private SubCategoryResponse subCategory;
     private CityResponse city;
@@ -32,12 +29,11 @@ public class ProductFullResponse {
         name = product.getName();
         description = product.getDescription();
         price = product.getPrice();
-        date_published = product.getDate_published();
+        date = product.getDate();
         reviews = product.getReviews();
         subCategory = new SubCategoryResponse(product.getSubCategory());
         city = new CityResponse(product.getCity());
         user = new UserResponse(product.getUser());
         photos = product.getPhotos().stream().map(PhotoResponse::new).collect(Collectors.toList());
-
     }
 }

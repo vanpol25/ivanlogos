@@ -37,4 +37,9 @@ public class SubCategoryController {
         return subCategoryService.findAll();
     }
 
+    @GetMapping("findByCategoryId")
+    public List<SubCategoryResponse> findByCategoryId(Long id) {
+        return subCategoryService.findByCategoryId(id);
+    }
+
 }

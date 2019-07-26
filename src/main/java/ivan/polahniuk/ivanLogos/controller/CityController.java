@@ -37,4 +37,9 @@ public class CityController {
         return cityService.findAll();
     }
 
+    @GetMapping("findByRegionId")
+    public List<CityResponse> findByRegionId(Long id) {
+        return cityService.findByRegionId(id);
+    }
+
 }

@@ -18,13 +18,13 @@ public class UserController {
     private UserService userService;
 
     @PostMapping
-    public void create(@Valid @RequestBody UserRequest request) {
-        userService.create(request);
+    public Long create(@Valid @RequestBody UserRequest request) {
+        return userService.create(request);
     }
 
     @PutMapping
-    public void update(Long id, @Valid @RequestBody UserRequest request) {
-        userService.update(id, request);
+    public Long update(Long id, @Valid @RequestBody UserRequest request) {
+        return userService.update(id, request);
     }
 
     @DeleteMapping

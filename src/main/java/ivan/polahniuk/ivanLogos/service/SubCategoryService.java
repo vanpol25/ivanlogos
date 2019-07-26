@@ -44,6 +44,10 @@ public class SubCategoryService {
                 .collect(Collectors.toList());
     }
 
+    public List<SubCategoryResponse> findByCategoryId(Long id) {
+        return subCategoryRepository.findByCategory_Id(id).stream().map(SubCategoryResponse::new).collect(Collectors.toList());
+    }
+
     public SubCategory findById(Long id) {
         return subCategoryRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("SubCategory with id=" + id + " not exists"));

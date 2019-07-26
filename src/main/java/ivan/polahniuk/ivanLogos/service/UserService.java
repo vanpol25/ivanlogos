@@ -19,25 +19,26 @@ public class UserService {
     @Autowired
     private CityService cityService;
 
-    public void create(UserRequest request) {
-        save(new User(), request);
+    public Long create(UserRequest request) {
+        return save(new User(), request);
     }
 
-    public void update(Long id, UserRequest request) {
-        save(findById(id), request);
+    public Long update(Long id, UserRequest request) {
+        return save(findById(id), request);
     }
 
     public void delete(Long id) {
         userRepository.delete(findById(id));
     }
 
-    private void save(User user, UserRequest request) {
+    private Long save(User user, UserRequest request) {
         user.setName(request.getName());
         user.setEmail(request.getEmail());
         user.setPassword(request.getPassword());
-        user.setPhone_number(request.getPhone_number());
+        user.setPhoneNumber(request.getPhoneNumber());
         user.setCity(cityService.findById(request.getCityId()));
         userRepository.save(user);
+        return user.getId();
     }
 
     public List<UserResponse> findAll() {

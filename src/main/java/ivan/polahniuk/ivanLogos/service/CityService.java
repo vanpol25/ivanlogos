@@ -41,6 +41,11 @@ public class CityService {
         return cityRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("City with id=" + id + " not exists"));
     }
+
+    public List<CityResponse> findByRegionId(Long id) {
+        return cityRepository.findByRegion_Id(id).stream().map(CityResponse::new).collect(Collectors.toList());
+    }
+
     public List<CityResponse> findAll() {
         return cityRepository.findAll().stream().map(CityResponse::new).collect(Collectors.toList());
     }

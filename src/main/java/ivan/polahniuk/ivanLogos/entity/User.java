@@ -26,7 +26,7 @@ public class User {
 
     private String password;
 
-    private String phone_number;
+    private String phoneNumber;
 
     @OneToMany(mappedBy = "user")
     private List<Product> products = new ArrayList<>();

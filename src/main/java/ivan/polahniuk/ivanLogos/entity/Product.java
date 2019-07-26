@@ -27,10 +27,9 @@ public class Product {
 
     private Integer price;
 
-    private Date date_published;
+    private Date date;
 
-    @Column(columnDefinition = "bigint default 0")
-    private Long reviews;
+    private Long reviews = 0L;
 
     @ManyToOne
     private SubCategory subCategory;
@@ -46,7 +45,7 @@ public class Product {
     @ManyToMany(mappedBy = "favorite")
     private List<User> users = new ArrayList<>();
 
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE)
     private List<Photo> photos = new ArrayList<>();
 
 }

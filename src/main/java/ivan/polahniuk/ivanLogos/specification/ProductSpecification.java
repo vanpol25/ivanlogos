@@ -51,13 +51,13 @@ public class ProductSpecification implements Specification<Product> {
 
     private Predicate findBySubCategoryOrCategory(Root<Product> r, CriteriaBuilder cb) {
         Predicate predicate;
-        if (criteria.getCategoryId() != null) {
+        if (criteria.getSubCategoryId() != null) {
+            Join<Product, SubCategory> subCategoryJoin = r.join("subCategory");
+            predicate = cb.equal(subCategoryJoin.get("id"), criteria.getSubCategoryId());
+        } else if (criteria.getCategoryId() != null) {
             Join<Product, SubCategory> subCategoryJoin = r.join("subCategory");
             Join<SubCategory, Category> categoryJoin = subCategoryJoin.join("category");
             predicate = cb.equal(categoryJoin.get("id"), criteria.getCategoryId());
-        } else if (criteria.getSubCategoryId() != null) {
-            Join<Product, SubCategory> subCategoryJoin = r.join("subCategory");
-            predicate = cb.equal(subCategoryJoin.get("id"), criteria.getSubCategoryId());
         } else {
             predicate = cb.conjunction();
         }
@@ -66,13 +66,13 @@ public class ProductSpecification implements Specification<Product> {
 
     private Predicate findByCityOrRegion(Root<Product> r, CriteriaBuilder cb) {
         Predicate predicate;
-        if (criteria.getRegionId() != null) {
+        if (criteria.getCityId() != null) {
+            Join<Product, City> cityJoin = r.join("city");
+            predicate = cb.equal(cityJoin.get("id"), criteria.getCityId());
+        } else if (criteria.getRegionId() != null) {
             Join<Product, City> cityJoin = r.join("city");
             Join<City, Region> regionJoin = cityJoin.join("region");
             predicate = cb.equal(regionJoin.get("id"), criteria.getRegionId());
-        } else if (criteria.getCityId() != null) {
-            Join<Product, City> cityJoin = r.join("city");
-            predicate = cb.equal(cityJoin.get("id"), criteria.getCityId());
         } else {
             predicate = cb.conjunction();
         }

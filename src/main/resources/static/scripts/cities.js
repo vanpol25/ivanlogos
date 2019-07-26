@@ -65,7 +65,7 @@ $(document).ready(function () {
             <tr>
             <td>${city.id}</td>
             <td id="city-name-${city.id}">${city.name}</td>
-            <td>${city.regionResponse.name}</td>
+            <td>${city.region.name}</td>
             <td>
                 <button value="${city.id}" class="delete-btn btn waves-effect waves-light">Delete</button>
                 <button value="${city.id}" class="update-btn btn waves-effect waves-light">Update</button>

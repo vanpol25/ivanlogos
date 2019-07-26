@@ -9,7 +9,7 @@ import java.nio.file.Paths;
 import java.util.Base64;
 import java.util.UUID;
 
-import static ivan.polahniuk.ivanLogos.service.ProductService.IMG_DIR;
+import static ivan.polahniuk.ivanLogos.config.StaticResourcesConfiguration.IMG_DIR;
 
 @Service
 public class FileService {

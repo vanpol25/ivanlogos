@@ -1,107 +1,274 @@
 $(document).ready(function () {
 
     let $pageSize = $('#selectPage');
-    let $page = $('#currentPage');
+    let $currentPage = $('#currentPage');
+    let $totalElements = $('#totalElements');
     let $totalPages;
 
 
     $('.sidenav').sidenav();
 
+
     function getProducts() {
+
         let request = {
             name: $('#findByName').val(),
             minPrice: $('#min-priceFilter').val(),
             maxPrice: $('#max-priceFilter').val(),
-            subCategoryId: $('#subCategoryFilter').val(),
-            categoryId: $('#categoryFilter').val(),
-            cityId: $('#cityFilter').val(),
-            regionId: $('#regionFilter').val()
+            subCategoryId: $('#subCategoryFilter :selected').val(),
+            categoryId: $('#categoryFilter :selected').val(),
+            cityId: $('#cityFilter :selected').val(),
+            regionId: $('#regionFilter :selected').val(),
+            paginationRequest: {
+                page: +$currentPage.html() - 1,
+                size: $pageSize.val()
+            }
         };
+
         $.ajax({
             url: `http://localhost:8080/product/findByFilter`,
-            type: 'get',
+            type: 'post',
             contentType: "application/json",
             data: JSON.stringify(request),
             success: (response) => {
                 $totalPages = response.totalPages;
+                $totalElements.html(response.totalElements);
                 $('.contentProduct').html('');
                 for (let product of response.data) {
                     addItem(product)
                 }
-                onDeleteBtn();
-                onUpdateBtn();
-                onCreateBtn();
             },
             error: console.log
         });
     }
 
     getProducts();
+    addRegionToSelectFilter();
+    addCategoryToSelectFilter();
 
-    $.ajax({
-        url: 'http://localhost:8080/subCategory',
-        type: 'get',
-        success: function (response) {
-            for (let subCategory of response) {
-                addSubcategoryToSelect(subCategory)
-            }
+    function addItem(product) {
+        $('.contentProduct').append(`
+            <div class="item">
+                <img class="img-item" src="http://localhost:8080/img/${product.mainImg}">
+                <p>$${product.price}</p>
+                <a class="linkToProduct" href="http://localhost:8080/item?id=${product.id}" target="_blank">${product.name}</a>
+            </div>
+        `);
+    }
+
+    $('#clearOfFilterConfiguration').click(() => {
+        $('#min-priceFilter').val('');
+        $('#max-priceFilter').val('');
+        $('#subCategoryFilter [value=""]').prop("selected", true);
+        $('#categoryFilter [value=""]').prop("selected", true);
+        $('#cityFilter [value=""]').prop("selected", true);
+        $('#regionFilter [value=""]').prop("selected", true);
+    });
+
+    $('#next').click(() => {
+        let $page = $currentPage.html();
+        if ($page != $totalPages) {
+            $currentPage.html(++$page);
+            getProducts();
+        } else {
+            return;
         }
     });
 
-    $.ajax({
-        url: 'http://localhost:8080/city',
-        type: 'get',
-        success: function (response) {
-            for (let city of response) {
-                addCityToSelect(city)
-            }
+    $('#prev').click(() => {
+        let $page = $currentPage.html();
+        if ($page != 1) {
+            $currentPage.html(--$page);
+            getProducts();
+        } else {
+            return;
         }
     });
 
-    $.ajax({
-        url: 'http://localhost:8080/user',
-        type: 'get',
-        success: function (response) {
-            for (let user of response) {
-                addUserToSelect(user)
-            }
-        }
+    $pageSize.change(() => {
+        getProducts();
     });
 
-    $('#create-updateBtn').click(function () {
-        let id = $('#productId').val();
+    $('#find').click(() => {
+        getProducts();
+    });
+
+    function addRegionToSelectFilter() {
+        $.ajax({
+            url: 'http://localhost:8080/region',
+            type: 'get',
+            success: function (response) {
+                for (let region of response) {
+                    $('#regionFilter').append(`
+                        <option value="${region.id}">${region.name}</option>
+                    `);
+                    $('#userRegionSelector').append(`
+                        <option value="${region.id}">${region.name}</option>
+                    `);
+                    $('#productRegionSelector').append(`
+                        <option value="${region.id}">${region.name}</option>
+                    `);
+                }
+            }
+        });
+        $("#regionFilter").change(() => {
+            let $cityFilter = $('#cityFilter');
+            $cityFilter.empty();
+            $cityFilter.append('<option value="" selected disabled>Choose city</option>');
+            addCityToSelectFilter($('#regionFilter :selected').val());
+        });
+        $("#userRegionSelector").change(() => {
+            let $citySelector = $('#userCitySelector');
+            $citySelector.empty();
+            $citySelector.append('<option value="" selected disabled>Choose city</option>');
+            addUserCityToSelector($('#userRegionSelector :selected').val());
+        });
+        $("#productRegionSelector").change(() => {
+            let $citySelector = $('#productCitySelector');
+            $citySelector.empty();
+            $citySelector.append('<option value="" selected disabled>Choose city</option>');
+            addProductCityToSelector($('#productRegionSelector :selected').val());
+        })
+    }
+
+    function addCityToSelectFilter(id) {
+        $.ajax({
+            url: 'http://localhost:8080/city/findByRegionId?id=' + id,
+            type: 'get',
+            success: function (response) {
+                for (let city of response) {
+                    $('#cityFilter').append(`
+                        <option value="${city.id}">${city.name}</option>
+                    `);
+                }
+            }
+        });
+    }
+
+    function addUserCityToSelector(id) {
+        $.ajax({
+            url: 'http://localhost:8080/city/findByRegionId?id=' + id,
+            type: 'get',
+            success: function (response) {
+                for (let city of response) {
+                    $('#userCitySelector').append(`
+                        <option value="${city.id}">${city.name}</option>
+                    `);
+                }
+            }
+        });
+    }
+
+    function addProductCityToSelector(id) {
+        $.ajax({
+            url: 'http://localhost:8080/city/findByRegionId?id=' + id,
+            type: 'get',
+            success: function (response) {
+                for (let city of response) {
+                    $('#productCitySelector').append(`
+                        <option value="${city.id}">${city.name}</option>
+                    `);
+                }
+            }
+        });
+    }
+
+    function addCategoryToSelectFilter() {
+        $.ajax({
+            url: 'http://localhost:8080/category',
+            type: 'get',
+            success: function (response) {
+                for (let category of response) {
+                    $('#categoryFilter').append(`
+                        <option value="${category.id}">${category.name}</option>
+                    `);
+                    $('#productCategorySelector').append(`
+                        <option value="${category.id}">${category.name}</option>
+                    `);
+                }
+            }
+        });
+        $("#categoryFilter").change(() => {
+            let $subCategoryFilter = $('#subCategoryFilter');
+            $subCategoryFilter.empty();
+            $subCategoryFilter.append('<option value="" selected disabled>Choose subCategory</option>');
+            addSubCategoryToSelectFilter($('#categoryFilter :selected').val());
+        });
+        $("#productCategorySelector").change(() => {
+            let $subCategorySelector = $('#productSubCategorySelector');
+            $subCategorySelector.empty();
+            $subCategorySelector.append('<option value="" selected disabled>Choose subCategory</option>');
+            addSubCategoryToSelector($('#productCategorySelector :selected').val());
+        })
+    }
+
+    function addSubCategoryToSelectFilter(id) {
+        $.ajax({
+            url: 'http://localhost:8080/subCategory/findByCategoryId?id=' + id,
+            type: 'get',
+            success: function (response) {
+                for (let subCategory of response) {
+                    $('#subCategoryFilter').append(`
+                        <option value="${subCategory.id}">${subCategory.name}</option>
+                    `);
+                }
+            }
+        });
+    }
+
+    function addSubCategoryToSelector(id) {
+        $.ajax({
+            url: 'http://localhost:8080/subCategory/findByCategoryId?id=' + id,
+            type: 'get',
+            success: function (response) {
+                for (let subCategory of response) {
+                    $('#productSubCategorySelector').append(`
+                        <option value="${subCategory.id}">${subCategory.name}</option>
+                    `);
+                }
+            }
+        });
+    }
+
+    $('#create-updateBtn').click(() => {
+        let request = {
+            name: $('#userName').val(),
+            password: $('#userPassword').val(),
+            phone_number: $('#userPhoneNumber').val(),
+            cityId: $('#userCitySelector :selected').val()
+        };
+
+        $.ajax({
+            url: 'http://localhost:8080/user',
+            type: 'post',
+            contentType: "application/json",
+            data: JSON.stringify(request),
+            success: (response) => {
+                productCreate(response)
+            }
+        })
+    });
+
+    function productCreate(id) {
         let request = {
             name: $('#nameInput').val(),
             description: $('#descriptionInput').val(),
             price: $('#priceInput').val(),
-            subCategoryId: $('#subCategorySelector :selected').val(),
-            cityId: $('#citySelector :selected').val(),
-            userId: $('#userSelector :selected').val()
+            subCategoryId: $('#productSubCategorySelector :selected').val(),
+            cityId: $('#productCitySelector :selected').val(),
+            userId: id
         };
-        if (id === '') {
-            $.ajax({
-                url: 'http://localhost:8080/product',
-                contentType: 'application/json',
-                type: 'post',
-                data: JSON.stringify(request),
-                success: function (response) {
-                    console.log('Product created! Id= ' + response);
-                    uploadPhotos(response);
-                }
-            });
-        } else {
-            $.ajax({
-                url: 'http://localhost:8080/product?id=' + id,
-                contentType: 'application/json',
-                type: 'put',
-                data: JSON.stringify(request),
-                success: function (response) {
-                    console.log('Product updated! Id= ' + response);
-                    uploadPhotos(response);
-                }
-            });
-        }
-    });
+
+        $.ajax({
+            url: 'http://localhost:8080/product',
+            type: 'post',
+            contentType: 'application/json',
+            data: JSON.stringify(request),
+            success: (response) => {
+                uploadPhotos(response)
+            }
+        })
+    }
 
     function uploadPhotos(id) {
         let fileArr = document.getElementById("photoInput").files;
@@ -141,158 +308,4 @@ $(document).ready(function () {
         });
     }
 
-    function addItem(product) {
-        $('.contentProduct').append(`
-            <div class="item">
-                <img class="img-item" src="http://localhost:8080/img/${product.mainImg}">
-                <p>$${product.price}</p>
-                <a class="linkToProduct" href="http://localhost:8080/item?id=${product.id}" target="_blank">${product.name}</a>
-                <div>
-                    <button value="${product.id}" class="update-btn btn-small waves-effect waves-light">Update</button>
-                    <button value="${product.id}" class="delete-btn btn-small waves-effect waves-light">Delete</button>
-                </div>
-            </div>
-        `);
-    }
-
-    function onDeleteBtn() {
-        $('.delete-btn').click((e) => {
-            let id = e.target.value;
-            $.ajax({
-                url: 'http://localhost:8080/product?id=' + id,
-                type: 'delete',
-                success: function () {
-                    $(e.target.parentElement.parentElement).slideUp();
-                    console.log('City with id=' + id + ' is deleted')
-                }
-            })
-        })
-    }
-
-    function onUpdateBtn() {
-        $('.update-btn').click((e) => {
-            let id = e.target.value;
-            $.ajax({
-                url: `http://localhost:8080/product/item?id=${id}`,
-                type: 'get',
-                success: function (response) {
-                    onUpdateAction(response);
-                }
-            });
-
-        })
-    }
-
-    function onCreateBtn() {
-        $('#createBtn').click(() => {
-            $('#productId').val('');
-            $('#photoPlace').html('');
-            $('#nameInput').val('');
-            $('#descriptionInput').val('');
-            $('#priceInput').val('');
-            $(`#subCategorySelector [value='0']`).prop("selected", true);
-            $(`#citySelector [value='0']`).prop("selected", true);
-            $(`#userSelector [value='0']`).prop("selected", true);
-            $('#create-updateBtn').html('Create');
-        });
-
-    }
-
-    function onUpdateAction(response) {
-        $('#photoPlace').html('');
-        $('#productId').val(response.id);
-        $('#nameInput').val(response.name);
-        $('#descriptionInput').val(response.description);
-        $('#priceInput').val(response.price);
-        $(`#subCategorySelector [value='${response.subCategory.id}']`).prop("selected", true);
-        $(`#citySelector [value='${response.city.id}']`).prop("selected", true);
-        $(`#userSelector [value='${response.user.id}']`).prop("selected", true);
-        $('#create-updateBtn').html('Update');
-        if (response.photos != null) {
-            for (let photo of response.photos) {
-                $('#photoPlace').append(`
-                    <div class="photo-editor">
-                         <img src="http://localhost:8080/img/${photo.name}">
-                         <div>
-                            <button value="${photo.id}" class="delete-photo-btn btn waves-effect waves-light red">X</button>
-                            <button value="${photo.id}" class="update-main-photo-btn btn waves-effect waves-light red">M</button>
-                        </div> 
-                    </div>
-                `)
-            }
-            onDeletePhotoBtn();
-            onMainPhotoBtn();
-        }
-        $('.sidenav').sidenav('open');
-    }
-
-    function onDeletePhotoBtn() {
-        $('.delete-photo-btn').click((e) => {
-            let id = e.target.value;
-            $.ajax({
-                url: 'http://localhost:8080/photo?id=' + id,
-                type: 'delete',
-                success: function () {
-                    $(e.target.parentElement.parentElement).slideUp();
-                    console.log('Photo with id=' + id + ' is deleted')
-                }
-            })
-        })
-    }
-
-    function onMainPhotoBtn() {
-        $('.update-main-photo-btn').click((e) => {
-            let id = e.target.value;
-            $.ajax({
-                url: 'http://localhost:8080/photo?id=' + id,
-                type: 'put',
-                success: function () {
-                    console.log('Photo with id=' + id + ' being main')
-                }
-            })
-        })
-    }
-
-    function addSubcategoryToSelect(subCategory) {
-        $('#subCategorySelector').append(`
-            <option value="${subCategory.id}">${subCategory.name}</option>
-        `);
-    }
-
-    function addCityToSelect(city) {
-        $('#citySelector').append(`
-            <option value="${city.id}">${city.name}</option>
-        `);
-    }
-
-    function addUserToSelect(user) {
-        $('#userSelector').append(`
-            <option value="${user.id}">${user.name}</option>
-        `);
-    }
-
-    $('#next').click(() => {
-        let $currentPage = $page.html();
-        if ($currentPage == $totalPages) {
-            return;
-        } else {
-            $page.html(+$currentPage + 1);
-            getProducts();
-        }
-    });
-
-    $('#prev').click(() => {
-        let $currentPage = $page.html();
-        if ($currentPage == 1) {
-            return;
-        } else {
-            $page.html(+$currentPage - 1);
-            getProducts();
-        }
-    });
-
-    $pageSize.change(() => {
-        $page.html('1');
-        getProducts();
-    });
 });

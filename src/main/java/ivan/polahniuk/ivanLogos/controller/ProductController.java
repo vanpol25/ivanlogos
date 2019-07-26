@@ -47,7 +47,7 @@ public class ProductController {
     }
 
     @PostMapping("findByFilter")
-    public List<ProductResponse> findByFilter(@Valid @RequestBody ProductCriteria criteria) {
+    public PageResponse<ProductResponse> findByFilter(@Valid @RequestBody ProductCriteria criteria) {
         return productService.findByCriteria(criteria);
     }
 
