@@ -13,13 +13,19 @@ import javax.validation.constraints.Size;
 @Setter
 
 public class UserRequest {
+
     @NotBlank
-    @Size(min = 4)
-    private String name;
+    @Size(min = 4, max = 30)
+    private String username;
+
     private String email;
+
     @NotBlank
+    @Size(min = 8, max = 30)
     private String password;
+
     private String phoneNumber;
+
     @NotNull
     private Long cityId;
 

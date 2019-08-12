@@ -57,6 +57,8 @@ public class ProductService {
             }
         });
         productRepository.delete(product);
+        //!!!Test!!!
+//        productRepository.deleteById(id);
     }
 
     private Long save(Product product, ProductRequest request) {
@@ -77,9 +79,6 @@ public class ProductService {
         }
         if (product.getMainImg() == null) {
             product.setMainImg(EMPTY_IMG);
-        }
-        if (product.getId() == null) {
-            product.setReviews(0L);
         }
         productRepository.save(product);
         return product.getId();

@@ -12,7 +12,7 @@ import lombok.Setter;
 public class UserResponse {
 
     private Long id;
-    private String name;
+    private String username;
     private String email;
     private String password;
     private String phoneNumber;
@@ -21,7 +21,7 @@ public class UserResponse {
 
     public UserResponse(User user) {
         id = user.getId();
-        name = user.getName();
+        username = user.getUsername();
         email = user.getEmail();
         password = user.getPassword();
         phoneNumber = user.getPhoneNumber();
