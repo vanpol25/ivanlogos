@@ -47,6 +47,7 @@ public class JwtTokenTool {
         Claims claims = Jwts.claims().setSubject(login);
         claims.put("roles", Collections.singleton(userRole.name()));
 
+
         Date now = new Date();
         Date validity = new Date(now.getTime() + expiring);
 

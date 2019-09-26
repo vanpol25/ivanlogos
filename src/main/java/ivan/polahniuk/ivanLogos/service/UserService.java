@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -31,6 +30,7 @@ public class UserService implements UserDetailsService {
     @Autowired
     private CityService cityService;
 
+    @Autowired
     private AuthenticationManager authenticationManager;
 
     @Autowired
@@ -45,8 +45,7 @@ public class UserService implements UserDetailsService {
     }
 
     public void delete(Long id) {
-        userRepository.delete(findById(id));
-//        userRepository.deleteById(id);
+        userRepository.deleteById(id);
     }
 
     public AuthenticationResponse register(UserRequest request) {
@@ -72,7 +71,7 @@ public class UserService implements UserDetailsService {
         return new AuthenticationResponse(username, token);
     }
 
-    private User findByUsername(String username)  {
+    public User findByUsername(String username)  {
         return userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User with username " + username + " not exists"));
     }
 

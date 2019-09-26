@@ -10,6 +10,7 @@ import java.util.Collections;
 
 
 public class JwtUser implements UserDetails {
+
     private String username;
     private String password;
     private UserRole userRole;

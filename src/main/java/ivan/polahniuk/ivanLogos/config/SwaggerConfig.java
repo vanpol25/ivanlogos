@@ -30,4 +30,5 @@ public class SwaggerConfig {
     private ApiKey apiKey() {
         return new ApiKey("token", "Authorization", "header");
     }
+
 }

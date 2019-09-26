@@ -36,4 +36,5 @@ public class ProductFullResponse {
         user = new UserResponse(product.getUser());
         photos = product.getPhotos().stream().map(PhotoResponse::new).collect(Collectors.toList());
     }
+
 }
